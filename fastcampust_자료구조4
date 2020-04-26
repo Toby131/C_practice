@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
+typedef struct {
+	int data;
+	struct Node* leftChild;
+	struct Node* rightChild;
+}Node;
+Node* initNode(int data, Node* leftChild, Node* rightChild) {
+	Node* node = (Node*)malloc(sizeof(Node));
+	node->data = data;
+	node->leftChild = leftChild;
+	node->rightChild = rightChild;
+	return node;
+}
+
+void preorder(Node* root) { //전위순회
+	if (root) {
+		printf("%d", root->data);
+		predorder(root->leftChild);
+		preorder(root->rightChild);
+	}
+}
+
+void inorder(Node* root) { //중위순회
+	if (root) {
+		inorder(root->leftChild);
+		printf("%d", root->data);
+		inorder(root->rightChild);
+	}
+}
+
+void postorder(Node* root) { //후위순회
+	if (root) {
+		postorder(root->leftChild);
+		postorder(root->rightChild);
+		printf("%d", root->data);
+	}
+}
+
+int main(void) { //이진트리 사용하기
+	Node* n7 = intiNode(50, NULL, NULL);
+	Node* n6 = intiNode(37, NULL, NULL);
+	Node* n5 = intiNode(23, NULL, NULL);
+	Node* n4 = intiNode(5, NULL, NULL);
+	Node* n3 = intiNode(48, 76, n7);
+	Node* n2 = intiNode(17, 74, n5);
+	Node* n1 = intiNode(30, n2, n3);
+	preorder(n1);
+	printf("\n");
+	inorder(n1);
+	printf("\n");
+	postorder(n1);
+	system("pause");
+	return 0;
+}
