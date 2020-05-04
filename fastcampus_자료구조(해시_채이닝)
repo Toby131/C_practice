@@ -1,0 +1,99 @@
+//체이닝 구조체 정의
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#define TABLE_SIZE 10007 //큰 소수로 설정
+#define INPUT_SIZE 5000
+
+typedef struct {
+	int id;
+	char name[20];
+}Student; //학생 구조체 정의
+
+typedef struct { //학생 구조체가 각각 연결리스트로
+	Student *data;
+	struct Bucket *next;
+}Bucket;
+
+
+//체이닝 해시 테이블의 초기화 및 반환함수
+void init(Bucket **hashTable) { //해시테이블 초기화
+	for (int i = 0; i < TABLE_SIZE; i++) {
+		hashTable[i] = NULL;
+	}
+}
+void destructor(Bucket **hashTable) { //해시테이블 메모리 반환
+	for (int i = 0 ; i < TABLE_SIZE; i++) {
+		if (hashTable[i] != NULL) {
+			free(hashTable[i]);
+		}
+	}
+}
+
+
+//체이닝 데이터 탐색 함수
+int isExist(Bucket **hashTable, int id) {
+	int i = id % TABLE_SIZE;
+	if (hashTable[i] == NULL) return 0; //해당테이블이 널값으면 없는거->0반환
+	else {
+		Bucket* cur = hashTable[i];
+		while (cur != NULL) {
+			if (cur->data->id == id) return 1; //있으면 1반환
+			cur = cur->next;
+		}
+	}
+	return 0;
+}
+
+
+//체이닝 데이터 삽입 함수
+void add(Bucket **hashTable, Student *input) {
+	int i = input->id & TABLE_SIZE;
+	if (hashTable[i] == NULL) {
+		hashTable[i] = (Bucket*)malloc(sizeof(Bucket));
+		hashTable[i]->data = input;
+		hashTable[i]->next = NULL; //키가 비어있으면 첫번째에 연결리스트 넣기
+	}
+	else {
+		Bucket *cur = (Bucket*)malloc(sizeof(Bucket));
+		cur->data = input;
+		cur->next = hashTable[i];
+		hashTable[i] = cur;
+	}
+}
+
+
+//체이닝 데이터 출력 함수
+void show(Bucket **hashTable) {
+	for (int i = 0; i < TABLE_SIZE; i++) {
+		if (hashTable[i] != NULL) {
+			Bucket* cur = hashTable[i];
+			while (cur != NULL) {
+				printf("키: [%d 이름 : [%s]\n", i, cur->data->name);
+				cur = cur->next;
+			}
+		}
+	}
+}
+
+
+//체이닝 해시 테이블 사용해보기
+int main(void) {
+	Bucket **hashTable;
+	hashTable = (Bucket**)malloc(sizeof(Bucket) * TABLE_SIZE);
+	init(hashTable);
+
+	for (int i = 0; i < INPUT_SIZE; i++) {
+		Student *student = (Student*)malloc(sizeof(Student));
+		student->id = rand() % 1000000;
+		sprintf(student->name, "사람%d", student->id);
+		if (!isExist(hashTable, student->id)) { //중복되는 ID는 존재안하게
+			add(hashTable, student);
+		}
+	}
+	show(hashTable);
+	destructor(hashTable);
+	system("pause");
+	return 0;
+}
