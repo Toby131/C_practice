@@ -1,0 +1,56 @@
+//KMP 문자열 매칭 : KMP 알고리즘 사용하기
+
+//테이블 만들기 : 문자열 정의
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+char* parent = "acabacdabac";
+char* pattern = "abacdab";
+
+//테이블 만들기 : 테이블 생성 함수 구현하기
+int* makeTable(char* pattern) {  //배열구성
+	int patternSize = strlen(pattern);  //패턴길이 구하기
+	int* table = (int*)malloc(sizeof(int) * patternSize); //동적할당
+	for (int i = 0; i < patternSize; i++) {
+		table[i] = 0;
+	}
+	int j = 0;
+	for (int i = 1; i < patternSize; i++) {
+		while (j > 0 && pattern[i] != pattern[j]) {  //일치하지 않으면
+			j = table[j - 1]; //j를 마지막으로 일치하는 순간까지의 인덱스로 이동해 재검사 : table[j-1]이 마지막으로 일치했던 순간
+		}
+		if (pattern[i] == pattern[j]) {  //일치하는 경우에
+			table[i] = ++j;  //j에 1 더한 뒤 j 인덱스를 table[i]에 삽입
+		}
+	}
+	return table;
+}
+
+//문자열 매칭하기 : KMP 함수 구현하기
+void KMP(char* parent, char* pattern) {
+	int* table = makeTable(pattern);
+	int parentSize = strlen(parent);
+	int patternSize = strlen(pattern);
+	int j = 0;
+	for (int i = 0; i < parentSize; i++) { //모든위치를 i가 반복하며 검사
+		while (j > 0 && parent[i] != pattern[j]) {
+			j = table[j - 1];
+		}
+		if (parent[i] == pattern[j]) {
+			if (j == patternSize - 1) {
+				printf("[인덱스 %d]에서 매칭 성공\n", i - patternSize + 2);
+				j = table[j];
+			}
+			else {
+				j++;
+			}
+		}
+	}
+}
+
+//KMP 문자열 매칭 알고리즘 사용해보기
+int main(void) {
+	KMP(parent, pattern);
+	system("pause");
+}
