@@ -1,0 +1,27 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+int main()
+{
+	int a, b;
+	int i, num, max;
+
+	printf("약수를 구할 두 정숫값을 입력하세요\n");
+	printf("입력1 :");
+	scanf("%d", &a);
+	printf("입력2 :");
+	scanf("%d", &b);
+
+	if (a > b)
+		num = a;
+	else
+		num = b;
+
+	for (i = 1; i <= num; i++)
+	{
+		if (((a % i) == 0) && ((b % i) == 0))
+			max = i;
+	}
+	printf("%d와 %d의 최대공약수는 %d입니다", a, b, max);
+	return 0;
+}
