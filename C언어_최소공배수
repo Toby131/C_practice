@@ -1,0 +1,32 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+int main()
+{
+	int i, num, data1, data2;
+	int data;
+
+	printf("최소공배수를 구해봅시다\n");
+	printf("첫 번째 숫자를 입력하세요 :");
+	scanf("%d", &data1);
+	printf("두 번째 숫자를 입력하세요 :");
+	scanf("%d", &data2);
+	num = data1 * data2;
+
+	if (data1 > data2)
+		data = data1;
+	else
+		data = data2;
+
+	for (i = 2; i < num; i++)
+	{
+		data = data * i;
+		if ((data % i) == 0)
+		{
+			printf("%d와 %d의 최소공배수는 %d입니다\n", data1, data2, data);
+			break;
+		}
+	}
+	if (i == num)
+		printf("%d와 %d는 최소공배수가 없습니다\n");
+}
