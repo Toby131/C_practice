@@ -1,0 +1,79 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+int i, j;
+
+int main()
+{	
+	printf("break문의 테스트입니다.\n");
+	
+	do
+	{
+		printf("do-while문의 %d번째 반복입니다.\n", i);
+
+		for (j = 0; j < 10; j++)
+		{
+			if (j == 5)
+				break;
+			printf("for문의 %d번째 반복입니다. \n", j);
+		}
+		i++;
+	
+	} while (i < 2);
+
+	printf("프로그램 종료.");
+
+}
+
+
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+int i, j;
+
+int main()
+{
+		printf("continue문의 테스트입니다.\n");
+		do
+		{
+			printf("do-while문의 %d번째 반복입니다.\n", i);
+			for (j = 0; j < 10; j++)
+			{
+				if (j == 5)
+					continue;
+				printf("for문의 %d번째 반복입니다.\n", j);
+			}
+			i++;
+		} while (i < 5);
+
+		printf("=====프로그램을 종료합니다=====");
+		return 0;
+}
+
+
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+int i, j;
+
+int main()
+{	
+	printf("goto문의 테스트입니다.\n");
+	do
+	{
+		printf("do-while문의 %d번째 반복입니다.\n", i);
+
+		for (j = 0; j < 10; j++)
+		{
+			if (j == 5)
+				goto stop1;
+			printf("for문의 %d번째 반복입니다.\n", j);
+		}
+		i++;
+	} while (i < 5);
+
+stop1:
+	printf("프로그램이 종료됩니다.");
+}
