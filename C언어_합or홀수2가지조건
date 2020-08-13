@@ -10,6 +10,19 @@ int main()
 	printf("1부터 입력한 수사이의 홀수 보기 : B \n");
 	printf("A,B 중 하나를 입력하세요 :");
 	scanf("%c", &i);
+
+	fflush(stdin);
+	
+	while (i != 'A' && i != 'B')
+	{
+		printf("다시 입력하세요 :");
+		scanf("%c", &i);
+		fflush(stdin);
+
+	}
+	
+	printf("\n");
+
 	printf("숫자를 입력하세요 :");
 	scanf("%d", &num);
 
@@ -35,9 +48,6 @@ int main()
 			printf("\t");
 		}
 	}
-
-	else
-		printf("잘못된 문자를 입력하였습니다.\n");
 
 	return 0;
 }
